@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consensus Simulator</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+    <div class="dashboard">
+        <div class="panel controls-panel">
+            <h1>Consensus Engine</h1>
+            <p class="subtitle">Blockchain Fork Resolution Simulator</p>
+            
+            <div class="action-section">
+                <button id="mineBtn" class="primary-btn">Mine Single Block</button>
+                <button id="toggleConsensusBtn" class="secondary-btn">Protocol: Nakamoto</button>
+                
+                <hr style="border: 1px solid #334155; margin: 10px 0; width: 100%;">
+                
+                <button id="autoRunBtn" class="action-btn start-btn">▶ Start Auto-Simulation</button>
+                <button id="hackerBtn" class="action-btn hacker-btn">Spawn 30% Attacker (Red)</button>
+            </div>
+
+            <div class="legend" style="margin-bottom: 20px; font-size: 13px; color: #cbd5e1;">
+                <div style="display: flex; align-items: center; margin-bottom: 5px;">
+                    <span style="display:inline-block; width: 12px; height: 12px; background: #eab308; margin-right: 8px; border-radius: 2px;"></span> Gold = Finalized (> 6 blocks deep)
+                </div>
+                <div style="display: flex; align-items: center; margin-bottom: 5px;">
+                    <span style="display:inline-block; width: 12px; height: 12px; background: #ef4444; margin-right: 8px; border-radius: 2px;"></span> Red = Hacker (Malicious Blocks)
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <span style="display:inline-block; width: 12px; height: 12px; background: #334155; margin-right: 8px; border-radius: 2px;"></span> Gray = Orphaned / Wasted
+                </div>
+            </div>
+
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <span class="metric-label">Active Protocol</span>
+                    <span id="activeProtocol" class="metric-value nakamoto-color">Nakamoto</span>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-label">Total Blocks</span>
+                    <span id="blockCount" class="metric-value">1</span>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-label">Orphaned Blocks</span>
+                    <span id="orphanCount" class="metric-value warning-color">0</span>
+                </div>
+            </div>
+            
+            <div class="instructions">
+                <h3>How to use:</h3>
+                <ul>
+                    <li>Click <strong>Mine New Block</strong> to grow the main chain.</li>
+                    <li>Click on any <strong>existing block</strong> on the canvas to simulate latency and create a fork.</li>
+                    <li>Create a wide cluster of forks, then switch to the <strong>GHOST Protocol</strong> to see how the heaviest subtree wins.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="panel canvas-panel">
+            <svg id="blockchain-tree"></svg>
+        </div>
+    </div>
+<div class="panel evaluation-panel" style="grid-column: 1 / -1; margin-top: 20px;">
+            <h2>Live Comparative Analysis</h2>
+            <p class="subtitle">Adjust network conditions to see how the protocols handle latency.</p>
+            
+            <div class="sliders-container">
+                <div class="slider-group">
+                    <label>Target Block Time: <span id="blockTimeVal" class="highlight">600</span> seconds</label>
+                    <input type="range" id="blockTimeSlider" min="10" max="600" value="600">
+                    <small>Lower = Faster Transactions (Higher TPS)</small>
+                </div>
+                
+                <div class="slider-group">
+                    <label>Network Latency: <span id="latencyVal" class="highlight">5</span> seconds</label>
+                    <input type="range" id="latencySlider" min="1" max="30" value="5">
+                    <small>Time it takes a block to travel the globe</small>
+                </div>
+            </div>
+
+            <div class="metrics-comparison">
+                <div class="metric-col nakamoto-col">
+                    <h3>Nakamoto (Longest Chain)</h3>
+                    <div class="data-row">
+                        <span>Wasted Hashpower (Orphans):</span>
+                        <span id="nakOrphan" class="data-value">0%</span>
+                    </div>
+                    <div class="data-row">
+                        <span>Attacker Threshold (Security):</span>
+                        <span id="nakSecurity" class="data-value">51.0%</span>
+                    </div>
+                </div>
+                
+                <div class="metric-col ghost-col">
+                    <h3>GHOST Protocol</h3>
+                    <div class="data-row">
+                        <span>Wasted Hashpower (Orphans):</span>
+                        <span id="ghostOrphan" class="data-value ghost-color">0% (Uncles Utilized)</span>
+                    </div>
+                    <div class="data-row">
+                        <span>Attacker Threshold (Security):</span>
+                        <span id="ghostSecurity" class="data-value ghost-color">51.0%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div> <script src="simulator.js"></script>
+    <script src="ui.js"></script>
+</body>
+</html>
+    <script src="simulator.js"></script>
+    <script src="ui.js"></script>
+</body>
+</html>
